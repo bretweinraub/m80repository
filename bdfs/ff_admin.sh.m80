@@ -1,3 +1,2 @@
-source /home/bweinraub/.rvm/environments/ree-1.8.7-2010.02\@global
+source /home/bweinraub/.rvm/environments/ree-1.8.7-2010.02\@ff_admin
 
-export PROJECT_NAME=ff_admin
