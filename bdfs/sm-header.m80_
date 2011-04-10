@@ -1,0 +1,18 @@
+<:
+# put in Perl Objects required by your repository, for example:
+#    use M80Repository::Sugar;
+:>
+
+m4_include(m4/shell.m4)m4_dnl
+m4_include(m4/base.m4)m4_dnl
+m4_include(m4/m80buildMacros.m4)m4_dnl
+
+<: do {
+    $m81path = $ENV{M81_HOME};
+    $m4path = $m81path . "/lib/m4";
+} ;
+:> # find m4 libraries to be included.
+
+m4_include(<:= $m4path :>/stateMachinePackage.m4)m4_dnl
+m4_include(<:= $m4path :>/databaseObjects.m4)m4_dnl
+
