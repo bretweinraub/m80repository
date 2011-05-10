@@ -1,0 +1,37 @@
+# $m80path = [{command => "embedperl"}, {command => "m4conv"}]
+<:- ./sm-header.m80_ :>
+
+define_variable(PROJECT_ROOT,${HOME}/dev/aura.git)
+define_variable(PROJECT,aura-di)
+
+databaseUser(CONTROLLER_USER,bonddemo)
+
+newAutomator(CONTROLLER,XE,localhost,1521,m80var(CONTROLLER_USER_USERNAME),m80var(CONTROLLER_USER_PASSWORD),localhost,bweinraub,/data/deployments/<:= $ENV{M80_BDF} :>,<:= $m81path:>/sm/src,StateMachine,,/var/www/html/,80)
+
+<:
+    use M80Repository::Sugar;
+    use M80Repository::MySQL;
+    use M80Repository::Postgres;
+    use M80Repository::DeployableBits;
+    use M80Repository::SQLServer;
+    use M80Repository::Mas90;
+:>
+
+<:= MySQL_DB(name => "SUGARDB",
+	     host => "sugar.aura-software.com",
+	     user => "sugarcrm",
+ 	     database => "sugarcrm",
+	     password => "jQuNJWk8lb6u",
+	     port => 3306); :>
+
+<:= Postgres_DB(name => "SlimtimerDB",
+	     host => "admin.aura-software.com",
+	     user => "aura-di-etl",
+ 	     database => "slimtimer",
+             schema => "public",
+	     password => "BuvudR3t",
+	     port => 5432); :>
+
+
+<:- ./sm-footer.m80_ :>
+

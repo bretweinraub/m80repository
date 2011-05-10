@@ -1,0 +1,45 @@
+# $m80path = [{command => "embedperl"}, {command => "m4conv"}]
+<:- ./sm-header.m80_ :>
+
+define_variable(PROJECT_ROOT,${HOME}/dev/aura.git)
+define_variable(PROJECT,medtronic-admin)
+define_variable(PROJECT_NAME,medtronic)
+
+databaseUser(CONTROLLER_USER,bweinraub)
+
+newAutomator(CONTROLLER,smdbdev2,localhost,5432,m80var(CONTROLLER_USER_USERNAME),f@@lish!,localhost,bweinraub,/data/deployments/<:= $ENV{M80_BDF} :>,<:= $m81path:>/sm/src,StateMachine,,/var/www/html/,80)
+
+define_variable(CONTROLLER_type,Pg)
+
+<:
+    use M80Repository::MySQL;
+    # use M80Repository::Postgres;
+    # use M80Repository::DeployableBits;
+    # use M80Repository::SQLServer;
+:>
+
+<:= MySQL_DB(name => "MedEuProd",
+#	     host => "prod.medtronic.aura-software.com",
+	     host => "127.0.0.1",
+	     user => "wp",
+ 	     database => "prod_med_04282011",
+	     password => "wp",
+	     port => 33306); :>
+
+
+
+export PATH="/usr/local/rvm/gems/ruby-1.8.7-p334@medtronic-admin/bin:/usr/local/rvm/gems/ruby-1.8.7-p334@global/bin:/usr/local/rvm/rubies/ruby-1.8.7-p334/bin:/usr/local/rvm/bin:$PATH" 
+export rvm_path='/usr/local/rvm'
+export RUBY_VERSION='ruby-1.8.7-p334'
+export GEM_HOME='/usr/local/rvm/gems/ruby-1.8.7-p334@medtronic-admin'
+export GEM_PATH='/usr/local/rvm/gems/ruby-1.8.7-p334@medtronic-admin:/usr/local/rvm/gems/ruby-1.8.7-p334@global'
+export MY_RUBY_HOME='/usr/local/rvm/rubies/ruby-1.8.7-p334'
+export IRBRC='/usr/local/rvm/rubies/ruby-1.8.7-p334/.irbrc'
+export rvm_ruby_string='ruby-1.8.7-p334'
+export rvm_gemset_name='medtronic-admin'
+unset MAGLEV_HOME
+
+
+
+<:- ./sm-footer.m80_ :>
+

@@ -1,0 +1,27 @@
+# $m80path = [{command => "embedperl"}, {command => "m4conv"}]
+<:- ./sm-header.m80_ :>
+
+define_variable(PROJECT_ROOT,${HOME}/dev/aura.git)
+
+databaseUser(CONTROLLER_USER,bonddemo)
+
+newAutomator(CONTROLLER,XE,localhost,1521,m80var(CONTROLLER_USER_USERNAME),m80var(CONTROLLER_USER_PASSWORD),localhost,bweinraub,/data/deployments/<:= $ENV{M80_BDF} :>,<:= $m81path:>/sm/src,StateMachine,,/var/www/html/,80)
+
+<:
+    use M80Repository::Sugar;
+    use M80Repository::MySQL;
+    use M80Repository::DeployableBits;
+    use M80Repository::SQLServer;
+    use M80Repository::Mas90;
+:>
+
+<:= MySQL_DB(name => "SUGARDB",
+	     host => "labs.ckuru.com",
+	     user => "root",
+ 	     database => "sugarcrm",
+	     password => "root",
+	     port => 3306); :>
+
+
+<:- ./sm-footer.m80_ :>
+

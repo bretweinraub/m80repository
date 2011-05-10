@@ -1,0 +1,74 @@
+define_variable(DATABASE_NAME,m80var(CONTROLLER_DB_DATABASE_NAME))
+append_variable(PATH,":"<:= $m81path :>/sm/src/utils)
+define_variable(SYSTEM_PASSWORD,"4c0D4uW14377")
+
+databaseModule(ETLManagerDB,<:= $m81path :>/sm/db/ETLManagerDB)
+# simple
+
+newAutomatorModule(SSHTunnelManager,CONTROLLER,<:= $m81path :>/sm/modules/simple/SSHTunnelManager,SSHTunnelManager)
+newAutomatorModule(ServerUtilities,CONTROLLER,<:= $m81path :>/sm/modules/simple/ServerUtilities,ServerUtilities)
+
+# processes
+
+newAutomatorModule(ETLProcess,CONTROLLER,<:= $m81path :>/sm/modules/processes/ETLProcess,ETLProcess)
+
+# interfaces
+
+newAutomatorModule(ETL,CONTROLLER,<:= $m81path :>/sm/modules/interfaces/ETL,ETL)
+newAutomatorModule(ETLManager,CONTROLLER,<:= $m81path :>/sm/modules/interfaces/ETLManager,ETLManager)
+
+# providers
+
+<:
+    @providers = ("ReplicationETLImpl",
+		  "ARReplicationETLImpl",
+		  "BaseETLManagerImpl",
+                  "StateMachineBase",
+		  "SugarETLManagerImpl",
+		  "PollingETLManagerImpl",
+		  "IntervalETLManagerImpl",
+		  "DimensionalETLImpl",
+		  "ETLPostProcessors");
+
+    my $ret; 
+    foreach $provider (@providers) {
+	$ret .= "newAutomatorModule($provider,CONTROLLER,$m81path/sm/modules/providers/$provider,$provider)\n";
+    }
+    print $ret;
+:>
+
+databaseModule(ETLManagerDB,<:= $m81path :>/sm/db/ETLManagerDB)
+
+addOnControllerModule(M80_REPOSITORY,CONTROLLER,m80repository,((deploy,m80var(PROJECT_ROOT)/m80repository,smDeployer.sh)))
+
+<: use M80Repository::StateMachine; :>
+
+<:=
+    addOnControllerModule( name => 'm81perlLib',
+			   deployedName => 'm81perlLib',
+			   controllerName => 'CONTROLLER',
+			   targets => [ { name => 'deploy',
+					  source => "$ENV{M81_HOME}/lib/perl",
+					  tool => "smDeployer.sh" },
+					{ name => "build",
+					  target => "all",
+					  source => "$ENV{M81_HOME}/lib/perl",
+					  tool => "simpleBuildTool.sh" } ] );
+:>
+<:=
+    addOnControllerModule( name => 'm81bin',
+			   deployedName => 'm81bin',
+			   controllerName => 'CONTROLLER',
+			   targets => [ { name => 'deploy',
+					  source => "$ENV{M81_HOME}/bin",
+					  tool => "smDeployer.sh" },
+					{ name => "build",
+					  target => "all",
+					  source => "$ENV{M81_HOME}/bin",
+					  tool => "simpleBuildTool.sh" } ] );
+:>
+
+define_variable(RAILS_ENV,m80var(M80_BDF)) # Cool - one to one mapping of bdf -> rails_env
+
+define_variable(SYBASE,/usr/local)
+append_variable(LD_LIBRARY_PATH,":/usr/local/lib")

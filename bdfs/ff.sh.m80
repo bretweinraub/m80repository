@@ -1,3 +1,3 @@
-source /home/bweinraub/.rvm/environments/ruby-1.9.2-p136\@ff_rails
+source /usr/local/rvm/environments/ruby-1.9.2-p180\@ff_rails
 
 export PROJECT_NAME=ff_rails

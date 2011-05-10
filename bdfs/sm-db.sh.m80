@@ -1,0 +1,4 @@
+# $m80path = [{command => "embedperl"}, {command => "m4conv"}]
+
+source /home/bweinraub/.rvm/environments/ree-1.8.7-2011.03\@sm-db
+
