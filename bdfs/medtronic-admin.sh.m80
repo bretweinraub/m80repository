@@ -7,7 +7,7 @@ define_variable(PROJECT_NAME,medtronic)
 
 databaseUser(CONTROLLER_USER,bweinraub)
 
-newAutomator(CONTROLLER,smdbdev2,localhost,5432,m80var(CONTROLLER_USER_USERNAME),f@@lish!,localhost,bweinraub,/data/deployments/<:= $ENV{M80_BDF} :>,<:= $m81path:>/sm/src,StateMachine,,/var/www/html/,80)
+newAutomator(CONTROLLER,smdbdev2,localhost,5432,m80var(CONTROLLER_USER_USERNAME),f@@lish!,localhost,bweinraub,/data/deployments/<:= $ENV{M80_BDF} :>,<:= $m81path:>/sm/src,StateMachine,systems_administration@aura-software.com,/var/www/html/,80)
 
 define_variable(CONTROLLER_type,Pg)
 
