@@ -1,7 +1,7 @@
 # $m80path = [{command => "embedperl"}, {command => "m4conv"}]
 <:- ./sm-header.m80_ :>
 
-define_variable(PROJECT_ROOT,${HOME}/dev/aura.git)
+define_variable(PROJECT_ROOT,${HOME}/dev/bitbucket)
 define_variable(PROJECT,medtronic-admin)
 define_variable(PROJECT_NAME,medtronic)
 
